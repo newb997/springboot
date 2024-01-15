@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+	<!-- 콘솔 출력 패턴 지정 -->
+	<appender name="consoleAppender" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder>
+			<pattern>
+				%d{yyyy-MM-dd HH:mm:ss} %-5level --- [%thread] %logger{36} -%msg%n
+			</pattern>
+		</encoder>
+	</appender>
+	
+	<logger name="com.study" level="info" />
+
+	<!-- log4j2-jdbc -->
+	<logger name="jdbc" level="off" />
+	<logger name="jdbc.sqlonly" level="off" />
+	<logger name="jdbc.sqltiming" level="debug" />
+	<!-- jdbc.resultset 결과만 보여주겠다. -->
+	<!-- <logger name="jdbc.resultset" level="debug" /> -->
+	<!-- resultsettable 결과를 테이블로 보여주겠다. -->
+	<logger name="jdbc.resultsettable" level="debug" />
+	<logger name="jdbc.connection" level="off" />
+	
+	
+	
+	<root level = "off">
+		<appender-ref ref="consoleAppender" />
+	</root>
+</configuration>

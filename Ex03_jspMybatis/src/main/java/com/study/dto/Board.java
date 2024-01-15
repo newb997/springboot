@@ -1,6 +1,7 @@
 package com.study.dto;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.NonNull;
 
 //@Getter
@@ -19,7 +20,7 @@ import lombok.NonNull;
  */
 
 
-//@NoArgsConstructor
+@NoArgsConstructor
 //@AllArgsConstructor
 @Data
 public class Board {
