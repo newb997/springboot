@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="jakarta.tags.core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -7,10 +8,10 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<h1>Member JPA #02  - SelectByEmail</h1>
+	<h1>게시판 글 등록 성공</h1>
 	
-	아이디 : ${ member.id } <br>
-	이름 : ${ member.name }<br>
-	이메일 : ${ member.email }
+	제목 : ${ board.title }<br>
+	내용 : ${ board.content }<br>
+	작성자 : ${ board.member }
 </body>
 </html>

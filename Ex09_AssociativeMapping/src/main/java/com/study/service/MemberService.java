@@ -14,11 +14,11 @@ public class MemberService {
 	@Autowired
 	private MemberRepository memberRepository;
 
-	public Page<Member> selectByNameLike(String name, Pageable pageable) {
-		Page<Member> member = memberRepository.findByNameLike(name, pageable);
-		
-		return member;
+	public Member insert(Member member) {
+		return memberRepository.save(member);
 	}
+
+	
 
 	
 	

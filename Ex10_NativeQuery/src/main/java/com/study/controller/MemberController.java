@@ -29,8 +29,27 @@ public class MemberController {
 		return "menu";
 	}
 	
-	@GetMapping("/selectByNameLike")
-	public String selectByNameLike(@RequestParam("name") String search,
+	@GetMapping("/selectByNameLike1")
+	public String selectMembers1(@RequestParam("name") String search, Model model) {
+		String name = search + "%";
+		model.addAttribute("members", memberService.selectMembers1(name));
+		
+		return "select_name_list1";
+	}
+	
+	@GetMapping("/selectByNameLike2")
+	public String selectMembers2(@RequestParam("name") String search, Model model) {
+		String name = search + "%";
+		Sort sort = Sort.by(Sort.Order.asc("id"));
+		model.addAttribute("members", memberService.selectMembers2(name, sort));
+		
+		return "select_name_list1";
+	}
+	
+	
+	
+	@GetMapping("/selectByNameLike3")
+	public String selectMembers3(@RequestParam("name") String search,
 								   @RequestParam("page") int page,
 								   Model model) {
 		String name = search + "%";			//user%
@@ -39,7 +58,7 @@ public class MemberController {
 		
 		Pageable pageable = PageRequest.ofSize(10).withPage(nPage).withSort(sort);  // .ofSize() : 한 페이지당 몇개 보여줄꺼냐?  여기서는 10개
 		
-		Page<Member> result = memberService.selectByNameLike(name, pageable);
+		Page<Member> result = memberService.selectMembers3(name, pageable);
 		List<Member> content = result.getContent();
 		long totalElements = result.getTotalElements();
 		int totalPages = result.getTotalPages();
@@ -55,10 +74,27 @@ public class MemberController {
 		model.addAttribute("numberOfElement", numberOfElement);
 		
 		
-		return "select_list";
+		return "select_name_list2";
 	}
 	
 	
+	@GetMapping("/selectByNameLike4")
+	public String selectMembers4(@RequestParam("name") String search, Model model) {
+		String name = search + "%";
+		model.addAttribute("members", memberService.selectMembers4(name));
+		
+		return "select_name_list1";
+	}
+	
+	
+	
+	
+	/*
+	public String selectByNameLike1(@RequestParam("name") String search,
+			   @RequestParam("page") int page,
+			   Model model) {
+	*/
+
 }
 
 

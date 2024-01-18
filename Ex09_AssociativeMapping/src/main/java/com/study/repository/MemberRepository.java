@@ -10,7 +10,6 @@ import com.study.domain.Member;
 @Repository
 public interface MemberRepository extends JpaRepository<Member, Long> {
 
-	Page<Member> findByNameLike(String name, Pageable pageable);
 
 
 }

@@ -7,8 +7,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<h1>Member JPA #02  - Insert</h1>
-	
-	데이터 추가 완료
+	<h1>회원 등록 성공</h1>
 </body>
 </html>
