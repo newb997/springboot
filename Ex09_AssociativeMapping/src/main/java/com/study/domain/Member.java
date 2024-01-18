@@ -1,6 +1,7 @@
 package com.study.domain;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -27,18 +28,19 @@ import lombok.NoArgsConstructor;
 public class Member {
 	@Id
 	private String id;
-	private String name;
 	private String password;
+	private String name;
+	private String email;
 	
 	// 생성되는 시간을 자동으로 넣어줌 (생성될때만 넣는거임 수정일땐 x 수정일땐 @LastModifiedDate )
 	@CreatedDate
 	@Column(name = " create_date")
-	private LocalDate createDate;
+	private LocalDateTime createDate;
 	
 	// 엔티티가 수정될 때 수정시간을 넣어줌
 	@LastModifiedDate
 	@Column(name = " update_date")
-	private LocalDate updateDate;
+	private LocalDateTime updateDate;
 	
 	/*
 	 	@CreatedDate와 @LastModifiedDate를 사용할 때

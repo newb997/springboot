@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 import com.study.domain.Member;
 
 @Repository
-public interface MemberRepository extends JpaRepository<Member, Long> {
+public interface MemberRepository extends JpaRepository<Member, String> {
 
 
 

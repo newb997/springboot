@@ -10,7 +10,7 @@
 	<form action="minsert" method="post">
 		ID : <input name="id"><p/>
 		이름 : <input name="name"><p/>
-		비밀번호 : <input type="password" name="password"><p/>
+		비밀번호 : <input type="password" name="password"><p/><!-- name은 entity 이름과 동일하게, db이름과 동일하게 -->
 		<button>회원가입</button>
 	</form>
 	
