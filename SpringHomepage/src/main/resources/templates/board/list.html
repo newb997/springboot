@@ -22,13 +22,13 @@
             </thead>
             <tbody>
 					<tr th:each="board, state : ${ boardPage }">
-						<td th:text="${ boardPage.totalElements - nowPage*boardPage.size()-state.index }"></td>
+						<td th:text="${ boardPage.totalElements - nowPage*boardPage.size-state.index }"></td>
 						<td id="ellip">
-							<a th:href="@{ detail(bno=${ board.bno }) }" th:text="${ board.title }"></a>
+							<a th:href="@{ detailForm(bno=${ board.bno }) }" th:text="${ board.title }"></a>
 						</td>
 						<td th:text="${ board.writer }"></td>
 						<td th:text="${ board.count }"></td>
-						<td th:text="${ board.createDate }"></td>
+<!--						<td th:text="${ board.createDate }"></td> 주석안하면 날짜 두개나옴-->  
 						<td th:text="*{#temporals.format(board.createDate, 'yyyy-MM-dd')}"></td>
 					</tr>
             </tbody>
@@ -57,10 +57,11 @@
 			</span>	
 		</div>
 		
-		<a href="insertForm">새글등록</a>
-<!--		<div th:if="${ loginUser != null }">-->
-<!--			<a href="insertForm">새글등록</a>-->
-<!--		</div>-->
+<!--		<a href="insertForm">새글등록</a>-->
+
+		<div th:if="${ loginUser != null }" align="right">
+			<a href="insertForm">새글등록</a>
+		</div>
 	</div>
 </body>
 </html>

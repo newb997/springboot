@@ -33,7 +33,8 @@
 				<tr>
 					<td colspan="2">
 						<!--<h3>${ loginUser.name }님 환영합니다</h3> 이렇게 안씀 무조건 th 해줘야함-->
-						<h3 th:text="|${ loginUser.name }님 환영합니다|"></h3>
+<!--						<h3 th:text="|${ loginUser.name }님 환영합니다|"></h3>-->
+						<h3>[[${loginUser.name}]]님 환영합니다</h3>
 					</td>
 				</tr>
 				<tr>
