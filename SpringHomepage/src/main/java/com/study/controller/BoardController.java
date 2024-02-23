@@ -1,5 +1,7 @@
 package com.study.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
@@ -7,11 +9,12 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.SessionAttribute;
 
 import com.study.domain.Board;
 import com.study.domain.Member;
+import com.study.domain.Reply;
 import com.study.service.BoardService;
+import com.study.service.ReplyService;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -21,8 +24,8 @@ public class BoardController {
 	@Autowired
 	BoardService boardService;
 	
-//	@Autowired
-//	ReplyService replyService;
+	@Autowired
+	ReplyService replyService;
 	
 	private Member loginUser;	// 현재 페이지에서 모두 사용하기 위해 인스턴스 변수로 선언
 	
@@ -61,6 +64,10 @@ public class BoardController {
 		}
 
 		Board board = boardService.selectDetail(bno).get();
+		
+		List<Reply> rList = replyService.replyList(bno);
+		
+		model.addAttribute("replyList", rList);
 		model.addAttribute("board", board);
 		return "board/detailForm";
 	}

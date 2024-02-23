@@ -4,6 +4,8 @@
 <meta charset="UTF-8">
 <title>게시판 글쓰기 화면</title>
 <link href="/css/index.css" rel="stylesheet" />
+<link href="/css/boardDetail.css" rel="stylesheet" />
+<script src="/webjars/jquery/3.7.1/jquery.min.js"></script>
 </head>
 <body>
 	<!--
@@ -49,26 +51,50 @@
 			</table>
 			<input type="hidden" name="bno" th:value="${ board.bno }">
 		</form>
+		
+		<table id="ajaxTable" align="center" style="width:100%; border:1px solid;">
+			<tr>
+				<th width="15%">댓글작성</th>
+				<th width="65%"><textarea cols="70" rows="3" id="replyContent"></textarea></th>
+				<th width="20%"><button onclick="insertReply()">등록</button></th>
+			</tr>
+			<tr>
+				<td colspan="3"  style="text-align: right;">댓글의 총 갯수 : [[${ replyList.size() }]]</td>
+			</tr>
+			<!-- var : model에서 넘어온 키값 var에 넣어서 씀 / items : model에서 가져온거 -->
+				<tr style="text-align: center;">
+					<td>작성자</td>
+					<td>내용</td>
+					<td>작성일</td>
+				</tr>
+				<tr th:each="r : ${ replyList }">
+					<td th:text="${ r.replyWriter }"></td>
+					<td th:text="${ r.replyContent }"></td>
+					<td th:text="${ r.replyCreateDate }"></td>
+				</tr>
+		</table>
+		
 	</div>
-	
-	<script>
-		function insertReply() {
-			$.ajax({
-				url: "rinsert.bo",	// ReplyInsertController   /rinsert.bo
-				data: {
-					"rno":[["${board.bno}"]],
-					"writer":"[[${loginUser.id}]]",
-					"content":$("#replyContent").val()
-				},
-				type: "post",
-				success:function(result) {
-					location.reload();
-				},
-				error:function(){
-					console.log("댓글 등록 ajax통신 실패");
-				}
-			})
-		}
-	</script>
+
+<script>
+	function insertReply() {
+		$.ajax({
+			url: "rinsert",	
+			data: {
+				boardNo:"[[${board.bno}]]",
+				writer:"[[${loginUser != null ? loginUser.id : '' }]]",
+				content:$("#replyContent").val()
+			},
+			type: "post",
+			success:function(result) {
+				location.reload();
+			},
+			error:function(){
+				console.log("댓글 등록 ajax통신 실패");
+			}
+		})
+	}
+</script>
+
 </body>
 </html>
