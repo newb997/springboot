@@ -25,5 +25,5 @@ public class Menu {
 	private Type type;			// 한식, 중식, 일식
 
 	@Enumerated(EnumType.STRING)
-	private Taste taste;		// 
+	private Taste taste;		// mild순한맛, hot매운맛
 }

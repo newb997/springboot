@@ -37,6 +37,21 @@ public class MenuService {
 		return menuRepository.save(menu);
 	}
 
+	public Menu updateMenu(Menu menu) {
+		Menu reMenu = menuRepository.findById(menu.getId()).get();
+		reMenu.setName(menu.getName());
+		reMenu.setPrice(menu.getPrice());
+		reMenu.setRestaurant(menu.getRestaurant());
+		reMenu.setType(menu.getType());
+		reMenu.setTaste(menu.getTaste());
+		
+		return menuRepository.save(menu);
+	}
+
+	public void deleteMenu(Long id) {
+		menuRepository.deleteById(id);
+	}
+
 //	public Menu findById(Long id) {
 //		return menuRepository.findById(id).get();
 //	}

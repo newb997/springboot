@@ -19,23 +19,23 @@
 </style>
 </head>
 <!--
-GET /menu : 전체메뉴 조회
-
-GET /menu/type/KR : 한식만 조회
-GET /menu/type/CH : 중식만 조회
-GET /menu/type/JP : 일식만 조회
-
-GET /menu/taste/MILD : 순한맛만 조회
-GET /menu/taste/HOT : 매운맛만 조회
-
-GET /menu/1 : 1번 메뉴 한건만 조회
-
-POST	/menu : 메뉴한건 등록
-
-PUT		/menu : 메뉴한건 전체 수정
-PATCH	/menu : 메뉴한건 일부 수정
-
-DELETE	/menu : 메뉴한건 삭제
+	GET /menu : 전체메뉴 조회
+	
+	GET /menu/type/KR : 한식만 조회
+	GET /menu/type/CH : 중식만 조회
+	GET /menu/type/JP : 일식만 조회
+	
+	GET /menu/taste/MILD : 순한맛만 조회
+	GET /menu/taste/HOT : 매운맛만 조회
+	
+	GET /menu/1 : 1번 메뉴 한건만 조회
+	
+	POST	/menu : 메뉴한건 등록
+	
+	PUT		/menu : 메뉴한건 전체 수정
+	PATCH	/menu : 메뉴한건 일부 수정
+	
+	DELETE	/menu : 메뉴한건 삭제
 -->
 
 <body>
@@ -186,8 +186,117 @@ DELETE	/menu : 메뉴한건 삭제
 						console.log(result);
 						console.log(textStatus);
 						console.log(jqXHR.getResponseHeader('Location'));
+						
+						const location = jqXHR.getResponseHeader('Location');
+						
+						// /menu/61
+						// ['', 'menu', '61']
+						const id = location.split('/').pop();
+						console.log(id);		// location에서 id만 뽑아오기
+						
+						// http상태코드 201(created가 잘 되었을 때) 일때  
+						if(jqXHR.status === 201){
+							alert('메뉴가 등록 되었습니다');
+						}						
 					},
-					error: console.log
+					error: console.log,
+					complete(){
+						e.target.reset();
+					}
+				})
+			});
+		</script>
+		
+		<!-- 5. PUT		/menu : 메뉴한건 전체 수정 -->
+		<div class="menu-test">
+			<h3>메뉴 수정하기(PUT)</h3>
+			<p>메뉴번호 검색 후 수정</p>
+			<form name="menuSearchFrm">
+				메뉴번호 : <input name="id"><br>
+				<button class="btn">검 색</button>
+			</form><br>
+			
+			<form name="menuUpdateFrm">
+				음식점 : <input name="restaurant" ><br>
+				메뉴명 : <input name="name" ><br>
+				가&emsp;격 : <input type="number" name="price" ><br>
+				<div>
+					<input type="radio" name="type" value="KR">한식
+					<input type="radio" name="type" value="CH">중식
+					<input type="radio" name="type" value="JP">일식
+				</div>
+				<div>
+					<input type="radio" name="taste" value="MILD">순한맛
+					<input type="radio" name="taste" value="HOT">매운맛
+				</div>
+				<br></br>
+				<button class="btn">수 정</button>
+				<input type="hidden" name="id" >
+				
+			</form>
+		</div><br>
+		<hr>
+		<script>
+			document.menuSearchFrm.addEventListener('submit', (e) => {
+				e.preventDefault();
+				findById(e.target.id.value);
+			});
+			
+			document.menuUpdateFrm.addEventListener('submit', (e) => {
+				e.preventDefault();
+				const frmData = new FormData(e.target);
+				const menu = {};
+				frmData.forEach((value, key) => {
+					menu[key] = value;
+				});
+				console.log("json 직렬화 : " + JSON.stringify(menu));
+				
+				$.ajax({
+					url: '/menu',
+					data: JSON.stringify(menu),
+					method: 'PUT',
+					contentType: "application/json; charset=utf-8",
+					success (result, textStatus, jqXHR){
+						console.log(result);
+						if(jqXHR.status === 200) {
+							alert('수정 되었습니다');
+						}
+					},
+					error: console.log,
+					complete(){
+						e.target.reset();
+					}
+				})
+			});
+		</script>
+		
+		<!-- 6. DELETE	/menu : 메뉴한건 삭제-->
+		<div class="menu-test">
+			<h3>메뉴 삭제하기(DELETE)</h3>
+			<p>메뉴번호로 삭제</p>
+			<form name="menuDeleteFrm">
+				메뉴번호 : <input name="id"><br>
+				<button class="btn">삭 제</button>
+			</form><br>
+		</div>
+		<script>
+			document.menuDeleteFrm.addEventListener('submit', (e) => {
+				e.preventDefault();
+				findById(e.target.id.value);
+				
+				$.ajax({
+					url: `/menu/${e.target.id.value}`,
+					method: 'DELETE',
+					success (result) {
+						console.log(result);
+					},
+					error: console.log,
+					complete(jqXHR){
+						e.target.reset();
+						if(jqXHR.status === 204){
+							alert('삭제 되었습니다');
+						}
+					}
 				})
 			});
 		</script>
@@ -201,6 +310,17 @@ DELETE	/menu : 메뉴한건 삭제
 					url:`/menu/${id}`,
 					success (result){
 						console.log(result);
+						
+						const frm = document.menuUpdateFrm;
+						const {id, name, restaurant,price, taste, type} = result;
+						
+						// form에 값 넣기
+						frm.id.value = id;
+						frm.restaurant.value = restaurant;
+						frm.name.value = name;
+						frm.price.value = price;
+						frm.taste.value = taste;
+						frm.type.value = type;
 					},
 					error(jqXHR, textStatus, errorMsg){ // jquery에서 제공해주는 error처리 3가지
 						console.log(`jqXHR : ${jqXHR}`);	//[object]  출력
@@ -233,7 +353,7 @@ DELETE	/menu : 메뉴한건 삭제
 									
 				 if(data.length > 0){
 					 data.forEach(item => {
-						value += ` <tr>
+						value += `<tr>
 									 <td><a href="javascript:findById('${item.id}')">${item.id}</td>
 									 <td>${item.name}</td>
 									 <td>${item.price}</td>

@@ -1,15 +1,16 @@
 package com.study.controller;
 
-import java.lang.StackWalker.Option;
 import java.net.URI;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -100,6 +101,19 @@ public class MenuRestController {
 		
 		//return ResponseEntity.ok(reMenu);	// 상태코드 200 ok
 		return ResponseEntity.created(URI.create("/menu/" + reMenu.getId())).build(); // 상태코드 201
+	}
+	
+	@PutMapping()
+	public ResponseEntity<?> updateMenu(@RequestBody Menu menu) {
+		Menu reMenu = menuService.updateMenu(menu);
+		return ResponseEntity.ok(reMenu);	// http상태코드 : 200
+	}
+	
+	@DeleteMapping("/{id}")
+	public ResponseEntity<?> deleteMenu(@PathVariable(name = "id") Long id) {
+		menuService.deleteMenu(id);
+		
+		return ResponseEntity.noContent().build();	// http상태코드 204(noContent() --> 안에 내용이 없다, 넘겨줄 내용이 없다.)
 	}
 	
 }
